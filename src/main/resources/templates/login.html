@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/myproject.css"/>
+    <script src="/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <SCRIPT src="/js/bootstrap.min.js" type="text/javascript"></SCRIPT>
+    <SCRIPT src="/js/demo.js" type="text/javascript"></SCRIPT>
+</head>
+<body>
+<div th:insert="header :: nav"></div>
+<div>
+    <!-- 登陆框主体 -->
+    <div id="login" class="login">
+        <!-- 登陆框标题 -->
+        <div id="login-title">
+            <span>登录窗口</span>
+        </div>
+        <div>
+            <!-- 登陆框表单 -->
+            <form action="/login" method="post">
+                <div id="login-form">
+                    <div class="login-input">
+                        <label>登录名：</label>
+                        <input type="text" name="name" placeholder="请输入登录名" class="list-input" th:value="${userName}">
+                    </div>
+
+                    <div class="login-input">
+                        <label>密&nbsp;&nbsp;&nbsp;码：</label>
+                        <input type="password" name="password" placeholder="请输入密码" class="list-input">
+                    </div>
+                    <!--/*@thymesVar id="loginError" type=""*/-->
+                    <input type="hidden" id="loginError" th:value="${loginError}">
+                    <!-- 登陆框登陆按钮 -->
+                    <button type="submit" id="loginSubmit" class="btn btn-success login-btn" onclick="loginVerify()">登录</button>
+                    <button type="button" id="closeBtn" class="btn btn-default">关闭</button>
+                </div>
+            </form>
+            <div class="register-text">
+                <span>如果你还没有账号,<a herf="/register">点我呀！！</a></span>
+            </div>
+        </div>
+
+    </div>
+    <!-- 遮盖层 -->
+    <div id="bg" class="bg">sada</div>
+</div>
+<!-- 插入JS代码 -->
+<script type="text/javascript">
+    /*var login=document.getElementById('login');
+    var bg=document.getElementById('bg');
+    // 1.点击"点击，弹出登陆框",弹出登陆窗口和遮盖层
+    var adminBtn=document.getElementById('adminBtn');
+    adminBtn.onclick=function(){
+        login.style.display="block";
+        bg.style.display="block";
+        return false;
+    }
+    // 2.点击"关闭",隐藏登陆窗口和遮盖层
+    var closeBtn=document.getElementById('closeBtn');
+    closeBtn.onclick=function(){
+        login.style.display="none";
+        bg.style.display="none";
+        return false;
+    }*/
+    // 3.鼠标拖拽功能
+    var login_title=document.getElementById('login-title');
+    login_title.onmousedown=function(e){
+        e = e || window.event;
+        var x=e.pageX || e.clientX +(document.body.scrollLeft || document.documentElement.scrollLeft);
+        var y=e.pageY || e.clientY +(document.body.scrollTop || document.documentElement.scrollTop);
+
+        var boxX=login.offsetLeft;
+        var boxY=login.offsetTop;
+
+        var mouse_in_boxX=x-boxX;
+        var mouse_in_boxY=y-boxY;
+
+        document.onmousemove=function(e){
+            var x=e.pageX || e.clientX +(document.body.scrollLeft || document.documentElement.scrollLeft);
+            var y=e.pageY || e.clientY +(document.body.scrollTop || document.documentElement.scrollTop);
+
+            login.style.left=x-mouse_in_boxX+256+'px';
+            login.style.top=y-mouse_in_boxY-142+'px';
+        }
+    }
+
+    login_title.onmouseup = function(){
+        document.onmousemove=null;
+    }
+
+</script>
+<div th:insert="footer :: author"></div>
+</body>
+</html>

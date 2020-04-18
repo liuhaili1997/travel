@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/myproject.css"/>
+    <script src="/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <SCRIPT src="/js/bootstrap.min.js" type="text/javascript"></SCRIPT>
+    <SCRIPT src="/js/demo.js" type="text/javascript"></SCRIPT>
+</head>
+<body>
+<div th:insert="header :: nav"></div>
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="text-center">
+                <a class="text-hide sf-logo d-inline-block" href="http://segmentfault.com">SegmentFault</a>
+            </div>
+
+            <div class="card border-0 mt-4" id="registerDiv">
+                <div class="card-body">
+                    <h3 class="text-center register-title" id="9df34f1a-5067-1965-c26c-7f3a011dc259">注册账号</h3>
+                    <form class="register-form" action="/register" method="POST" role="form">
+                        <div class="form-group register-input">
+                            <input class="form-control" id="name" name="name" placeholder="你的名字" autocomplete="off"  th:value="${name}">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="密码"
+                                   autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="phone" name="phone" placeholder="手机号" th:value="${phone}">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" th:value="${email}">
+                        </div>
+                        <input type="hidden" id="registerError" th:value="${registerError}">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" onclick="registerVerify()">注册</button>
+                        <div class="text-muted text-center register-agreement">继续即代表同意<a href="#" target="_blank">
+                            《服务条款》</a>和<a href="#" target="_blank">《隐私政策》</a></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="footer :: author"></div>
+</body>
+</html>

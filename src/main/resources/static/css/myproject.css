@@ -1,0 +1,154 @@
+.index-brand {
+    width: 50px;
+    height: 30px;
+    padding-bottom: 3px;
+}
+
+body {
+    background-color: #e9ecef;
+}
+
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+/* 弹出登陆框按钮 */
+#login-header{
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+}
+#login-header a{
+    font-size: 24px;
+    text-decoration: none;
+    color: black;
+}
+
+/* 登陆框主体 */
+.login{
+    /*position: absolute;*/
+    width: 512px;
+    height: 284px;
+    /*z-index: 9999;*/
+    background-color: white;
+    border-radius: 5px;
+    /* 这里要注意绝对定位的盒子怎么在屏幕显示居中 */
+    /*left: 50%;*/
+    /*margin-left: -256px;*/
+    /*margin-top: 142px;*/
+    border: 1px solid gray;
+    background-color: burlywood;
+    margin: 43px auto;
+}
+/* 登陆框标题 */
+#login-title{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin-bottom: 20px;
+    cursor: move;
+    font-weight: 600;
+    font-size: large;
+}
+
+/* 登陆表单 */
+.login-input{
+    margin: 20px 0px 30px 0px;
+}
+.login-input label{
+    float: left;
+    height: 35px;
+    line-height: 35px;
+    width: 90px;
+    padding-left: 10px;
+    text-align: right;
+    font-size: 14px;
+}
+.login-input input.list-input{
+    height: 35px;
+    line-height: 35px;
+    width: 350px;
+    text-indent: 5px;
+    border-radius: 4px;
+}
+/* 登陆框登陆按钮 */
+.loginSubmit{
+    width: 260px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid gray;
+    background-color: white;
+    margin-left: 120px;
+
+}
+/* 遮盖层 */
+.bg{
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    position: fixed;
+    opacity: 0.3;
+    -webkit-opacity: 0.3;
+    -moz-opacity: 0.3;
+    display: none;
+}
+/*登录按钮*/
+.login-btn {
+    margin-left: 160px;
+    margin-right: 90px;
+}
+
+/*register页面的设计*/
+.card-body {
+    padding: 1.875rem;
+    margin: 0 auto;
+    min-height: 1px;
+    width: 410px;
+    height: 500px;
+    background-color: #dcdcdc;
+}
+.register-title {
+    margin-bottom: 30px;
+}
+.register-form {
+    width: 350px;
+    height: 400px;
+}
+.register-form div{
+    margin-bottom: 22px;
+    margin-left: 19PX;
+}
+.register-form div input {
+    height: 44px;
+    font-weight: 800;
+}
+.register-form button {
+    margin-left: 19px;
+    width: 330px;
+}
+.register-agreement {
+    margin-top: 10px;
+}
+.register-text {
+    margin-left: 16px;
+    margin-top: 26px;
+    font-size: 12px;
+}
+.register-text a {
+    text-decoration: none;
+    color: #8c8c8c;
+    cursor: pointer;
+}
+.register-text a:hover {
+    text-decoration: none;
+    color: #0C0C0C;
+}
+    /*地脚*/
+/*底部内容*/
+.text-foot {
+    text-align: center;
+    margin-top: 99px;
+}
