@@ -56,7 +56,7 @@ public class IndexController {
                         HttpServletResponse response,Model model) {
         model.addAttribute("userName", name);
         if (StringUtils.isBlank(name)) {
-            model.addAttribute("loginError", "用户名没写，不让你进入！！");
+            model.addAttribute("loginError", "用户名没写！！");
             return "login";
         }
         if (StringUtils.isBlank(password)) {
@@ -69,7 +69,7 @@ public class IndexController {
         List<User> users = userMapper.selectByExample(userExample);
         if (CollectionUtils.isEmpty(users)) {
             model.addAttribute("loginError", "用户不存在啊，好好的去注册一下吧");
-            return "login";
+            return "register";
         }
         User user = users.get(0);
         if (user.getPassword().equals(password)) {
@@ -127,7 +127,6 @@ public class IndexController {
         }
         //生成token
         String token = UUID.randomUUID().toString();
-
         User user = new User();
         user.setName(name);
         user.setPassword(password);
@@ -140,7 +139,7 @@ public class IndexController {
         //默认图片信息
         //todo 编辑用户信息时用户才可以自己上传图片
         userService.createOrUpdateUser(user);
-        return "index";
+        return "redirect:/";
     }
 
 

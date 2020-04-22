@@ -1,11 +1,11 @@
 package co.xingguo.travelmanage.services.impl;
 
+import co.xingguo.travelmanage.enums.impl.CustomizeErrorEnums;
+import co.xingguo.travelmanage.exception.CustomizeException;
 import co.xingguo.travelmanage.mapper.UserMapper;
 import co.xingguo.travelmanage.model.User;
 import co.xingguo.travelmanage.model.UserExample;
 import co.xingguo.travelmanage.services.UserService;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
             dbUser.setToken(user.getToken());
             dbUser.setUtime(System.currentTimeMillis());
             userMapper.updateByPrimaryKey(dbUser);*/
-           //todo 抛出异常 更新操作不能在这做，需要一个新的路径实现这个，这里是注册，表示的是这个用户名和email已经注册过记录了
+            throw new CustomizeException(CustomizeErrorEnums.USER_RECORD_IS_EXIT);
         }
     }
 }

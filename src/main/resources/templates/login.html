@@ -10,6 +10,15 @@
     <SCRIPT src="/js/bootstrap.min.js" type="text/javascript"></SCRIPT>
     <SCRIPT src="/js/demo.js" type="text/javascript"></SCRIPT>
 </head>
+<SCRIPT type="application/javascript">
+    window.onload = function () {
+        var closeable = window.localStorage.getItem("closeable");
+        if (closeable == "true") {
+            window.close();
+            window.localStorage.removeItem("closeable");
+        }
+    }
+</SCRIPT>
 <body>
 <div th:insert="header :: nav"></div>
 <div>
@@ -36,11 +45,12 @@
                     <input type="hidden" id="loginError" th:value="${loginError}">
                     <!-- 登陆框登陆按钮 -->
                     <button type="submit" id="loginSubmit" class="btn btn-success login-btn" onclick="loginVerify()">登录</button>
-                    <button type="button" id="closeBtn" class="btn btn-default">关闭</button>
+                    <a class="btn btn-primary btn-lg close-btn" href="/" role="button">关闭</a>
                 </div>
             </form>
             <div class="register-text">
-                <span>如果你还没有账号,<a herf="/register">点我呀！！</a></span>
+                <span>如果你还没有账号,</span>
+                <a href="/register">点我呀！！</a>
             </div>
         </div>
 
@@ -65,7 +75,7 @@
         login.style.display="none";
         bg.style.display="none";
         return false;
-    }*/
+    }
     // 3.鼠标拖拽功能
     var login_title=document.getElementById('login-title');
     login_title.onmousedown=function(e){
@@ -90,7 +100,7 @@
 
     login_title.onmouseup = function(){
         document.onmousemove=null;
-    }
+    }*/
 
 </script>
 <div th:insert="footer :: author"></div>

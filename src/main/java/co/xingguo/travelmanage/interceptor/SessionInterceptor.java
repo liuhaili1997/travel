@@ -27,17 +27,19 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")) {
-                String token = cookie.getValue();
-                UserExample userExample = new UserExample();
-                userExample.createCriteria()
-                        .andTokenEqualTo(token);
-                List<User> userList = userMapper.selectByExample(userExample);
-                if (!CollectionUtils.isEmpty(userList)) {
-                    request.getSession().setAttribute("user", userList.get(0));
+        if (cookies != null && cookies.length > 0) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    String token = cookie.getValue();
+                    UserExample userExample = new UserExample();
+                    userExample.createCriteria()
+                            .andTokenEqualTo(token);
+                    List<User> userList = userMapper.selectByExample(userExample);
+                    if (!CollectionUtils.isEmpty(userList)) {
+                        request.getSession().setAttribute("user", userList.get(0));
+                    }
+                    break;
                 }
-                break;
             }
         }
         //对所有请求做拦截，将user放到session内部  true 不中断程序

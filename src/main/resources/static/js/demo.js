@@ -25,7 +25,6 @@ function registerVerify() {
         alert(errorInformation);
         return;
     }
-
 }
 function loginVerify() {
     var errorInformation = $("#loginError").val();
@@ -33,5 +32,49 @@ function loginVerify() {
         alert(errorInformation);
         return;
     }
+}
+/*发布景点信息的ajax的写法*/
+function publishView() {
+    var title = $("#title").val();
+    var openTime = $("#openTime").val();
+    var address = $("#address").val();
+    var price = $("#price").val();
+    var description = $("#description").val();
+    var tag = $("#tag").val();
+    if (!title) {
+        alert("您未添加景区名称，不符合规范哦！！");
+        return;
+    }
+    if (!openTime) {
+        alert("您未添加营业时间，不符合规范哦！！");
+        return;
+    }
+    if (!address) {
+        alert("请添加详细地址，方便游客导航！！");
+        return;
+    }
+    if (!description) {
+        alert("您未添加描述信息，不符合规范哦！！");
+        return;
+    }
+    if (!tag) {
+        alert("只要要选一个tag，来标注景区的特色！！");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/publish/landscape",
+        data: JSON.stringify({
+            "title": title,
+            "openTime": openTime,
+            "address": address,
+            "price": price,
+            "description": description,
+            "tag": tag
+        }),
+        dataType: "json",
+        contentType: 'application/json'
+    });
 
 }
