@@ -41,10 +41,11 @@
                         <label>密&nbsp;&nbsp;&nbsp;码：</label>
                         <input type="password" name="password" placeholder="请输入密码" class="list-input">
                     </div>
-                    <!--/*@thymesVar id="loginError" type=""*/-->
                     <input type="hidden" id="loginError" th:value="${loginError}">
                     <!-- 登陆框登陆按钮 -->
-                    <button type="submit" id="loginSubmit" class="btn btn-success login-btn" onclick="loginVerify()">登录</button>
+                    <button type="submit" id="loginSubmit" class="btn btn-success login-btn" onclick="loginVerify()">
+                        登录
+                    </button>
                     <a class="btn btn-primary btn-lg close-btn" href="/" role="button">关闭</a>
                 </div>
             </form>

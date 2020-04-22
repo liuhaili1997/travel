@@ -1,11 +1,11 @@
 package co.xingguo.travelmanage.services.impl;
 
-import co.xingguo.travelmanage.dto.ViewDto;
+import co.xingguo.travelmanage.enums.impl.CustomizeErrorEnums;
+import co.xingguo.travelmanage.exception.CustomizeException;
 import co.xingguo.travelmanage.mapper.LandscapeMapper;
 import co.xingguo.travelmanage.model.Landscape;
 import co.xingguo.travelmanage.model.User;
 import co.xingguo.travelmanage.services.ViewService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +21,7 @@ public class ViewServiceImpl implements ViewService {
 
 
     @Override
-    public Integer createViewRecord(ViewDto viewDto, User user) {
-        Landscape landscape = new Landscape();
-        //title openTime address description price tag
-        BeanUtils.copyProperties(viewDto, landscape);
+    public void createViewRecord(Landscape landscape,User user) {
         Long creator = user.getAccountid();
         if (null != creator) {
             landscape.setCreator(creator);
@@ -40,6 +37,8 @@ public class ViewServiceImpl implements ViewService {
         landscape.setUtime(currentTime);
         int insert = landscapeMapper.insert(landscape);
         //当返回值不等于1时，表示没有插入成功
-        return insert;
+        if (insert != 1) {
+            throw new CustomizeException(CustomizeErrorEnums.VIEW_CREATE_IS_FAIL);
+        }
     }
 }

@@ -33,9 +33,13 @@ function loginVerify() {
         return;
     }
 }
-/*发布景点信息的ajax的写法*/
-function publishView() {
-    var title = $("#title").val();
+function alterError() {
+    /*var errorInformation = $("#viewError").val();
+    if (errorInformation) {
+        alert(errorInformation);
+        return;
+    }*/
+    var title = $("#viewTitle").val();
     var openTime = $("#openTime").val();
     var address = $("#address").val();
     var price = $("#price").val();
@@ -61,6 +65,40 @@ function publishView() {
         alert("只要要选一个tag，来标注景区的特色！！");
         return;
     }
+
+}
+
+function hotelError() {
+    var name = $("#hotelName").val();
+    var address = $("#hotelAddress").val();
+    var price = $("#hotelPrice").val();
+    var description = $("#hotelDescription").val();
+    var tag = $("#hotelTag").val();
+    if (!name) {
+        alert("您未添加名称，不符合规范哦！！");
+        return;
+    }
+    if (!address) {
+        alert("请添加详细地址，方便游客导航！！");
+        return;
+    }
+    if (!description) {
+        alert("您未添加描述信息，不符合规范哦！！");
+        return;
+    }
+    if (!price) {
+        alert("酒店入住必须要有价格，请记得输入价格！！");
+        return;
+    }
+    if (!tag) {
+        alert("只要要选一个tag，来标注景区的特色！！");
+        return;
+    }
+
+}
+/*发布景点信息的ajax的写法*/
+function publishView() {
+
 
     $.ajax({
         type: "POST",

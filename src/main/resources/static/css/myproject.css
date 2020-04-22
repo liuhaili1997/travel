@@ -207,3 +207,6 @@ body {
 .publish-view-textarea {
     border-radius: 4px;
 }
+.btn-red-info {
+    float: right;
+}

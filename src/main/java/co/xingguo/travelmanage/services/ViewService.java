@@ -1,6 +1,6 @@
 package co.xingguo.travelmanage.services;
 
-import co.xingguo.travelmanage.dto.ViewDto;
+import co.xingguo.travelmanage.model.Landscape;
 import co.xingguo.travelmanage.model.User;
 
 /**
@@ -12,9 +12,9 @@ public interface ViewService {
     /**
      * 保存发布的景区信息
      *
-     * @param viewDto 前端的值
+     * @param landscape 前端的值
      * @param user    当前的用户
      * @return 返回插入状态
      */
-    Integer createViewRecord(ViewDto viewDto, User user);
+    void createViewRecord(Landscape landscape, User user);
 }
