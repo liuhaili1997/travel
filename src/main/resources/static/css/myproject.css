@@ -7,6 +7,9 @@
 body {
     background-color: #e9ecef;
 }
+hr {
+    border-bottom: 1px solid #ccc;
+}
 
 
 *{
@@ -184,7 +187,7 @@ body {
 
 /*publish html*/
 .main {
-    margin: 30px;
+    margin: 50px;
 }
 .section {
     margin-top: 10px;
@@ -209,4 +212,132 @@ body {
 }
 .btn-red-info {
     float: right;
+    margin-right: -66px;
+}
+/*标签的间距*/
+.tag-question-margin {
+    cursor: pointer;
+    white-space: normal;
+    margin: 5px 5px;
+    display: inline-block;
+    font-weight: 500;
+    line-height: 14px;
+    font-size: 12px;
+}
+
+/*tag puilsh发布分享的问题的tag距离上边框的距离*/
+.tab-margin-top {
+    margin-top: 5px;
+    margin-left: 10px;
+}
+/*tag puilsh发布分享的问题的tag距离上边框的距离*/
+.tab-margin-top {
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.publish-tag-content {
+    margin-top: 8px;
+    display: none;
+}
+
+/*index 界面的样式*/
+.index-main {
+    padding-left: 13%;
+}
+.user-img {
+    width: 500px;
+    height: 280px;
+}
+.view-comment-count {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999999;
+}
+.index-background {
+    background-color: white;
+    border-radius: 4px;
+}
+.index-left-with {
+    width: 999px;
+}
+/*标题*/
+.index-title a {
+    font-weight: 600;
+    color: #1A1A17;
+    text-decoration: none;
+    cursor: pointer;
+}
+.index-title a:hover {
+    color: #95958a;
+}
+.index-info {
+    background-color: #eff4f8;
+    border-radius: 5px;
+}
+.index-info h4 {
+    margin-top: 20px;
+    margin-left: 25px;
+}
+
+/*index 展示信息*/
+.index-info dl {
+    margin-left: 25px;
+    margin-bottom: 10px;
+}
+.index-info dl dt {
+    float: left;
+}
+.index-sales {
+    float: left;
+    width: 200px;
+}
+/*view 界面*/
+/*发布人*/
+.initiator {
+    margin-top: 50px;
+}
+.initiator-body {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+.initiator-name {
+    margin-left: 3px;
+    margin-top: 17px;
+    color: #999999;
+}
+.view-user {
+    width: 42px;
+    height: 42px;
+}
+.view-manager {
+    font-size: 18px;
+    font-weight: 600;
+}
+.view-title {
+    font-weight: 600;
+    font-size: 22px;
+}
+.view-href {
+    margin-top: 11px;
+    margin-left: 34px;
+}
+.view-href li {
+    margin-bottom: 5px;
+}
+.view-row {
+    background-color: beige;
+}
+.tag-edit {
+    margin-top: 12px;
+}
+.tag-margin {
+    margin-right: 30px;
+    color: black;
+}
+.tag-margin:hover {
+    color: #95958a;
+    cursor: pointer;
+}
+.view-top {
+    margin-top: 20px;
 }

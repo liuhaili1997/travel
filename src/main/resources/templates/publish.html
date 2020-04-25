@@ -28,6 +28,7 @@
             <!--特色景区-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'landscape'}">
                 <form action="/publish/landscape" method="post">
+                    <input type="hidden" name="id" th:value="${id}">
                     <div class="form-group form-tag">
                         <label for="viewTitle">景点标题:</label>
                         <div class="input-group">
@@ -90,7 +91,29 @@
                     <div class="form-group form-tag">
                         <label for="tag">添加标签：</label>
                         <input type="text" class="form-control" id="tag" name="tag"
-                               autocomplete="off" placeholder="输入标签，以英文 , 号隔开" th:value="${tag}">
+                               autocomplete="off" placeholder="输入标签，以英文 , 号隔开" th:value="${tag}" onclick="showViewTag()">
+                        <div id="view-tag" class="publish-tag-content">
+                            <!--new tables-->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" th:each="selectTag,selectTagStatus:${tags}" th:class="${selectTagStatus.first? 'active':''}">
+                                    <a th:href="${'#'+selectTag.categoryName}" aria-controls="home" role="tab"
+                                       data-toggle="tab" th:text="${selectTag.categoryName}"></a>
+                                </li>
+                            </ul>
+                            <!--tables panes-->
+                            <div class="tab-content tab-margin-top">
+                                <div role="tabpanel" th:id="${selectTag.categoryName}"
+                                     th:each="selectTag,selectTagStatus:${tags}"
+                                     th:class="${selectTagStatus.first? 'tab-pane active':'tab-pane'}">
+                                <span class="label label-info tag-question-margin" th:each="tagList:${selectTag.tags}">
+                                    <span class="glyphicon glyphicon-tags" onclick="viewTag(this)"
+                                          th:data-tag="${tagList}">
+                                       <span th:text="${tagList}"></span>
+                                    </span>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="container-fluid main">
                         <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -107,8 +130,8 @@
                 </form>
             </div>
             <!--五星级酒店-->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'guesthost'}">
-                <form action="/publish/landscape" method="post">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'guesthouse'}">
+                <form action="/publish/guesthouse" method="post">
                     <div class="form-group form-tag">
                         <label for="hotelName">酒店名称:</label>
                         <div class="input-group">
@@ -163,11 +186,36 @@
                     <div class="form-group form-tag">
                         <label for="hotelTag">添加标签：</label>
                         <input type="text" class="form-control" id="hotelTag" name="hotelTag"
-                               autocomplete="off" placeholder="输入标签，以英文 , 号隔开" th:value="${tag}">
+                               autocomplete="off" placeholder="输入标签，以英文 , 号隔开，请选择对应得tag号"
+                               th:value="${tag}" onclick="showSelectTag()">
+                        <!--自动选择已有的标签-->
+                        <!--默认不展示 display: none-->
+                        <div id="select-tag" class="publish-tag-content">
+                            <!--new tables-->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" th:each="selectTag,selectTagStatus:${tags}" th:class="${selectTagStatus.first? 'active':''}">
+                                    <a th:href="${'#'+selectTag.categoryName}" aria-controls="home" role="tab"
+                                       data-toggle="tab" th:text="${selectTag.categoryName}"></a>
+                                </li>
+                            </ul>
+                            <!--tables panes-->
+                            <div class="tab-content tab-margin-top">
+                                <div role="tabpanel" th:id="${selectTag.categoryName}"
+                                     th:each="selectTag,selectTagStatus:${tags}"
+                                     th:class="${selectTagStatus.first? 'tab-pane active':'tab-pane'}">
+                                <span class="label label-info tag-question-margin" th:each="tagList:${selectTag.tags}">
+                                    <span class="glyphicon glyphicon-tags" onclick="selectTag(this)"
+                                          th:data-tag="${tagList}">
+                                       <span th:text="${tagList}"></span>
+                                    </span>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="container-fluid main">
                         <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="">
+                            <div>
                                 <div class="alert alert-danger btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "
                                      id="hotelError" th:if="${hotelError != null}" th:text="${hotelError}"></div>
                             </div>
@@ -196,7 +244,7 @@
         <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
             <div class="list-group section">
                 <a href="/publish/landscape" th:class="${section == 'landscape'} ? 'active list-group-item' : 'list-group-item'">景区</a>
-                <a href="/publish/guesthost" th:class="${section == 'guesthost'} ? 'active list-group-item' : 'list-group-item'">酒店</a>
+                <a href="/publish/guesthouse" th:class="${section == 'guesthouse'} ? 'active list-group-item' : 'list-group-item'">酒店</a>
                 <a href="/publish/specialfood" th:class="${section == 'specialfood'} ? 'active list-group-item' : 'list-group-item'">著名菜系</a>
                 <a href="/publish/refreshments" th:class="${section == 'refreshments'} ? 'active list-group-item' : 'list-group-item'">特色小吃</a>
                 <a href="/publish/history" th:class="${section == 'history'} ? 'active list-group-item' : 'list-group-item'">相关历史</a>

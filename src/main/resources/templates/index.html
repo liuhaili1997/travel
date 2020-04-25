@@ -12,7 +12,111 @@
 </head>
 <body>
 <div th:insert="header :: nav"></div>
-<div class=""></div>
+<div class="container-fluid main index-main">
+    <div class="row">
+        <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 index-background index-left-with">
+            <h2>
+                <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
+                <span class="text-title">景区 </span>
+            </h2>
+            <hr/>
+            <div class="media" th:each="view:${viewInfo.data}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-thumbnail user-img" th:src="${view.imgUrl}">
+                    </a>
+                </div>
+                <div class="media-body index-info">
+                    <div>
+                        <h4 class="media-heading index-title">
+                            <a th:href="@{'/view/'+ ${view.id}}" th:text="${view.title}"></a>
+                        </h4>
+                    </div>
+                    <!--<span th:text="${view.title}"></span><br>-->
+                    <hr />
+                    <div>
+                        <dl>
+                            <dt>营业时间：</dt>
+                            <dd th:text="${view.openTime}"></dd>
+                        </dl>
+                        <dl>
+                            <dt>景点地址：</dt>
+                            <dd th:text="${view.address}"></dd>
+                        </dl>
+                        <dl>
+                            <dt>主题分类：</dt>
+                            <dd th:text="${view.tag}"></dd>
+                        </dl>
+                        <dl th:if="${view.user.getPhone() != null}">
+                            <dt>联系电话：</dt>
+                            <dd th:text="${view.user.getPhone()}"></dd>
+                        </dl>
+                        <dl>
+                            <dt>邮箱：</dt>
+                            <dd th:text="${view.user.getEmail()}"></dd>
+                        </dl>
+                        <dl class="index-sales">
+                            <dt>浏览人数：</dt>
+                            <dd th:text="${view.viewCount}"></dd>
+                        </dl>
+                        <dl class="index-sales">
+                            <dt>总销售量：</dt>
+                            <dd th:text="${view.commentCount}"></dd>
+                        </dl>
+                    </div>
+                    <!--<span class="view-comment-count">
+                            <span th:text="${}"></span>个评论·
+                            <span th:text="${}"></span>次浏览·
+                        &lt;!&ndash;${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}&ndash;&gt;
+                            <span th:text="${#dates.format(view.ctime,'yyyy-MM-dd HH:mm')}"></span>
+                    </span>-->
+                </div>
+                <hr/>
+            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li th:if="${viewInfo.showFirstPage}">
+                        <a th:href="@{/(page=1,search=${search})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${viewInfo.showPrevious}">
+                        <a th:href="@{/(page=${viewInfo.currentPage - 1},search=${search})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page : ${viewInfo.pages}"
+                        th:class="${viewInfo.currentPage == page}?'active':''">
+                        <a th:href="@{/(page=${page},search=${search})}" th:text="${page}"></a>
+                    </li>
+                    <li th:if="${viewInfo.showNext}">
+                        <a th:href="@{/(page=${viewInfo.currentPage + 1},search=${search})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${viewInfo.showEndPage}">
+                        <a th:href="@{/(page=${viewInfo.totalPage},search=${search})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+            <div class="index-background">
+                <B style="font-size: 16px">热门景区</B>
+                <ul style="margin-left: 20px; margin-top: 11px;">
+                    <li>飞来峰</li>
+                    <li>飞来峰</li>
+                    <li>飞来峰</li>
+                    <li>飞来峰</li>
+                    <li>飞来峰</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
 <div th:insert="footer :: author"></div>
 </body>
 </html>

@@ -98,8 +98,6 @@ function hotelError() {
 }
 /*发布景点信息的ajax的写法*/
 function publishView() {
-
-
     $.ajax({
         type: "POST",
         url: "/publish/landscape",
@@ -115,4 +113,51 @@ function publishView() {
         contentType: 'application/json'
     });
 
+}
+
+/*展示标签和点击效果*/
+/**
+ * tag的实现点击就显示在输入框中
+ */
+function selectTag(e) {
+    var value = e.getAttribute("data-tag");
+    var previous = $("#hotelTag").val();
+    /*判断tag是否已经存在标签中了*/
+    if (previous.indexOf(value) == -1) {
+        //是否有原有的标签
+        if (previous) {
+            /*有tag，将新的添加在后面*/
+            $("#hotelTag").val(previous + ',' + value);
+        } else {
+            /*没有tag，将其作为第一个tag*/
+            $("#hotelTag").val(value)
+        }
+    }
+}
+
+/**
+ * 点击标签框的时候就展示tag
+ */
+function showSelectTag() {
+    $("#select-tag").show();
+}
+
+/*view---tag*/
+function showViewTag() {
+    $("#view-tag").show();
+}
+function viewTag(e) {
+    var value = e.getAttribute("data-tag");
+    var previous = $("#tag").val();
+    /*判断tag是否已经存在标签中了*/
+    if (previous.indexOf(value) == -1) {
+        //是否有原有的标签
+        if (previous) {
+            /*有tag，将新的添加在后面*/
+            $("#tag").val(previous + ',' + value);
+        } else {
+            /*没有tag，将其作为第一个tag*/
+            $("#tag").val(value)
+        }
+    }
 }

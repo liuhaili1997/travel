@@ -1,5 +1,7 @@
 package co.xingguo.travelmanage.controller;
 
+import co.xingguo.travelmanage.cache.TagCache;
+import co.xingguo.travelmanage.dto.ViewDto;
 import co.xingguo.travelmanage.model.Hotel;
 import co.xingguo.travelmanage.model.Landscape;
 import co.xingguo.travelmanage.model.User;
@@ -19,6 +21,7 @@ import java.math.BigDecimal;
 
 /**
  * 发布信息
+ *
  * @author Created by hailitortoise on 2020-04-22
  */
 @Controller
@@ -46,9 +49,10 @@ public class PublishController {
         if (null == user) {
             return "redirect:/";
         }
+        model.addAttribute("tags", TagCache.get());
         //显示相关的页面，对数据进行发布的是点击下面的连接
-        if ("guesthost".equals(action)) {
-            model.addAttribute("section", "guesthost");
+        if ("guesthouse".equals(action)) {
+            model.addAttribute("section", "guesthouse");
             model.addAttribute("sectionName", "酒店");
         } else if ("specialfood".equals(action)) {
             model.addAttribute("section", "specialfood");
@@ -76,17 +80,19 @@ public class PublishController {
      * @param price       价格
      * @param description 描述
      * @param tag         tag
+     * @param id
      * @param request     请求
      * @param model       与前端交互
      */
     @PostMapping("/publish/landscape")
     public String publishView(@RequestParam(name = "viewTitle", required = false) String title,
-                            @RequestParam(name = "openTime", required = false) String openTime,
-                            @RequestParam(name = "address", required = false) String address,
-                            @RequestParam(name = "price", required = false) BigDecimal price,
-                            @RequestParam(name = "viewTitle", required = false) String description,
-                            @RequestParam(name = "tag", required = false) String tag,
-                            HttpServletRequest request, Model model) {
+                              @RequestParam(name = "openTime", required = false) String openTime,
+                              @RequestParam(name = "address", required = false) String address,
+                              @RequestParam(name = "price", required = false) BigDecimal price,
+                              @RequestParam(name = "description", required = false) String description,
+                              @RequestParam(name = "tag", required = false) String tag,
+                              @RequestParam(name = "id",required = false) Long id,
+                              HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("user");
         /*回显*/
         model.addAttribute("viewTitle", title);
@@ -95,6 +101,8 @@ public class PublishController {
         model.addAttribute("price", price);
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);
+        model.addAttribute("id", id);
+        model.addAttribute("tags", TagCache.get());
         //必须要加这个，不然不好刷新界面啊
         model.addAttribute("section", "landscape");
         //后端判断不在前端进行判断
@@ -126,14 +134,18 @@ public class PublishController {
         landscape.setPrice(price);
         landscape.setTag(tag);
         landscape.setDescription(description);
-        viewService.createViewRecord(landscape, user);
+        //service 判断是否存在id 来确定是否更新还是新插入一条数据
+        if (null != id) {
+            landscape.setId(id);
+        }
+        viewService.createOrUpdateRecord(landscape, user);
         return "redirect:/";
     }
 
     /**
      * 新增酒店记录
      *
-     * @param name       标题
+     * @param name        标题
      * @param address     地址
      * @param price       价格
      * @param description 描述
@@ -141,13 +153,13 @@ public class PublishController {
      * @param request     请求
      * @param model       与前端交互
      */
-    @PostMapping("/publish/guesthost")
+    @PostMapping("/publish/guesthouse")
     public String publishHotel(@RequestParam(name = "hotelName", required = false) String name,
-                              @RequestParam(name = "hotelAddress", required = false) String address,
-                              @RequestParam(name = "hotelPrice", required = false) BigDecimal price,
-                              @RequestParam(name = "hotelDescription", required = false) String description,
-                              @RequestParam(name = "hotelTag", required = false) String tag,
-                              HttpServletRequest request, Model model) {
+                               @RequestParam(name = "hotelAddress", required = false) String address,
+                               @RequestParam(name = "hotelPrice", required = false) BigDecimal price,
+                               @RequestParam(name = "hotelDescription", required = false) String description,
+                               @RequestParam(name = "hotelTag", required = false) String tag,
+                               HttpServletRequest request, Model model) {
         User users = (User) request.getSession().getAttribute("user");
         /*回显*/
         model.addAttribute("name", name);
@@ -155,8 +167,9 @@ public class PublishController {
         model.addAttribute("price", price);
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);
+        model.addAttribute("tags", TagCache.get());
         //必须要加这个，不然不好刷新界面啊
-        model.addAttribute("section", "guesthost");
+        model.addAttribute("section", "guesthouse");
         //后端判断不在前端进行判断
         if (StringUtils.isBlank(name)) {
             model.addAttribute("hotelError", "您未添加酒店名称，不符合规范哦！！");
@@ -170,8 +183,9 @@ public class PublishController {
             model.addAttribute("hotelError", "您未添加描述信息，不符合规范哦！！");
             return "publish";
         }
-        if (StringUtils.isBlank(tag)) {
-            model.addAttribute("hotelError", "只要要选一个tag，来标注景区的特色！！");
+        String inValid = TagCache.filterInValid(tag);
+        if (StringUtils.isNotBlank(inValid)) {
+            model.addAttribute("erro", "你自己写了的标签是不能存的哦！！非法标签：" + inValid);
             return "publish";
         }
         //进行数据操作
@@ -184,4 +198,24 @@ public class PublishController {
         hotelService.createHotelRecord(hotel, users);
         return "redirect:/";
     }
+
+    @GetMapping("/publish/landscape/{id}")
+    public String edit(@PathVariable(name = "id") Long id, Model model) {
+        ViewDto viewDto = viewService.getById(id);
+        /*回显*/
+        model.addAttribute("id", viewDto.getId());
+        model.addAttribute("viewTitle", viewDto.getTitle());
+        model.addAttribute("openTime", viewDto.getOpenTime());
+        model.addAttribute("address", viewDto.getAddress());
+        model.addAttribute("price", viewDto.getPrice());
+        model.addAttribute("description", viewDto.getDescription());
+        model.addAttribute("tag", viewDto.getTag());
+        model.addAttribute("tags", TagCache.get());
+        //必须要加这个，不然不好刷新界面啊
+        model.addAttribute("section", "landscape");
+
+
+        return "publish";
+    }
+
 }
