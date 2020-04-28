@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <title>旅游兴国</title>
+    <title>旅游社</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/myproject.css"/>
@@ -32,7 +32,6 @@
                             <a th:href="@{'/view/'+ ${view.id}}" th:text="${view.title}"></a>
                         </h4>
                     </div>
-                    <!--<span th:text="${view.title}"></span><br>-->
                     <hr />
                     <div>
                         <dl>
@@ -55,6 +54,11 @@
                             <dt>邮箱：</dt>
                             <dd th:text="${view.user.getEmail()}"></dd>
                         </dl>
+                        <dl>
+                            <dt>价格：</dt>
+                            <dd class="index-money" th:text="${view.price}"></dd>
+                            <dd>￥</dd>
+                        </dl>
                         <dl class="index-sales">
                             <dt>浏览人数：</dt>
                             <dd th:text="${view.viewCount}"></dd>
@@ -64,12 +68,6 @@
                             <dd th:text="${view.commentCount}"></dd>
                         </dl>
                     </div>
-                    <!--<span class="view-comment-count">
-                            <span th:text="${}"></span>个评论·
-                            <span th:text="${}"></span>次浏览·
-                        &lt;!&ndash;${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}&ndash;&gt;
-                            <span th:text="${#dates.format(view.ctime,'yyyy-MM-dd HH:mm')}"></span>
-                    </span>-->
                 </div>
                 <hr/>
             </div>
@@ -102,17 +100,8 @@
                 </ul>
             </nav>
         </div>
+        <!--左侧内容-->
         <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-            <div class="index-background">
-                <B style="font-size: 16px">热门景区</B>
-                <ul style="margin-left: 20px; margin-top: 11px;">
-                    <li>飞来峰</li>
-                    <li>飞来峰</li>
-                    <li>飞来峰</li>
-                    <li>飞来峰</li>
-                    <li>飞来峰</li>
-                </ul>
-            </div>
         </div>
     </div>
 

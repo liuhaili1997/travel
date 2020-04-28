@@ -16,18 +16,18 @@ public class TagCache {
     public static List<TagDto> get() {
         List<TagDto> tagDtoList = new ArrayList<>();
         TagDto emotion = new TagDto();
-        emotion.setCategoryName("情感");
-        emotion.setTags(Arrays.asList("生活","感悟","爱情","悲伤","幸福","美好","未来","坚强"));
+        emotion.setCategoryName("区域");
+        emotion.setTags(Arrays.asList("省内","国内","海外"));
         tagDtoList.add(emotion);
 
         TagDto program = new TagDto();
-        program.setCategoryName("语言");
-        program.setTags(Arrays.asList("JavaScript","Java","PHP","node.js","typescript","css","python","c"));
+        program.setCategoryName("时长");
+        program.setTags(Arrays.asList("一日游","两日游","三日游","七日游","一月游","两月游"));
         tagDtoList.add(program);
 
         TagDto book = new TagDto();
-        book.setCategoryName("书籍");
-        book.setTags(Arrays.asList("红楼梦","三国演义","出师表","登黄鹤楼","假如给我三天光明","三体","完美世界"));
+        book.setCategoryName("价格");
+        book.setTags(Arrays.asList("100-500","500-1200","1200-3000","3000-1万","1万以上"));
         tagDtoList.add(book);
         return tagDtoList;
     }

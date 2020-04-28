@@ -1,11 +1,13 @@
 package co.xingguo.travelmanage.services.impl;
 
+import co.xingguo.travelmanage.dto.UserDto;
 import co.xingguo.travelmanage.enums.impl.CustomizeErrorEnums;
 import co.xingguo.travelmanage.exception.CustomizeException;
 import co.xingguo.travelmanage.mapper.UserMapper;
 import co.xingguo.travelmanage.model.User;
 import co.xingguo.travelmanage.model.UserExample;
 import co.xingguo.travelmanage.services.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -80,6 +82,36 @@ public class UserServiceImpl implements UserService {
             dbUser.setUtime(System.currentTimeMillis());
             userMapper.updateByPrimaryKey(dbUser);*/
             throw new CustomizeException(CustomizeErrorEnums.USER_RECORD_IS_EXIT);
+        }
+    }
+
+    @Override
+    public void updateUserInfo(UserDto userDto) {
+        User user = userMapper.selectByPrimaryKey(userDto.getId());
+        if (user == null) {
+            throw new CustomizeException(CustomizeErrorEnums.USER_IS_NOT_EXIT);
+        }
+        String avatar = userDto.getAvatarUrl();
+        if (StringUtils.isNotBlank(avatar)) {
+            user.setAvatarUrl(avatar);
+        }
+        String name = userDto.getName();
+        if (StringUtils.isNotBlank(name)) {
+            user.setName(name);
+        }
+        String phone = userDto.getPhone();
+        if (StringUtils.isNotBlank(phone)) {
+            user.setPhone(phone);
+        }
+        String password = userDto.getPassword();
+        if (StringUtils.isNotBlank(password)) {
+            user.setPassword(password);
+        }
+        Long currentTime = System.currentTimeMillis();
+        user.setUtime(currentTime);
+        int i = userMapper.updateByPrimaryKey(user);
+        if (i != 1) {
+            throw new CustomizeException(CustomizeErrorEnums.USER_UPDATE_IS_FAIL);
         }
     }
 }

@@ -1,5 +1,6 @@
 package co.xingguo.travelmanage.services;
 
+import co.xingguo.travelmanage.dto.UserDto;
 import co.xingguo.travelmanage.model.User;
 
 /**
@@ -13,4 +14,11 @@ public interface UserService {
      * @param user 接受数据对象
      */
     void createOrUpdateUser(User user);
+
+    /**
+     * 更新用户信息
+     *
+     * @param userDto 拓展类
+     */
+    void updateUserInfo(UserDto userDto);
 }

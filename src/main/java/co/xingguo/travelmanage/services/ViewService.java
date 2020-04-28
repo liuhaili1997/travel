@@ -46,4 +46,18 @@ public interface ViewService {
      * @return 结果集合
      */
     List<ViewDto> selectRelated(ViewDto viewDto);
+
+    /**
+     * 增加阅读数
+     *
+     * @param id id
+     */
+    void incViewCount(Long id);
+
+    /**
+     * 增加阅读数
+     *
+     * @param id id
+     */
+    void incCommentCount(Long id);
 }

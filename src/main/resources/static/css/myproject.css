@@ -16,6 +16,14 @@ hr {
     margin: 0px;
     padding: 0px;
 }
+/*header 头*/
+.header-search {
+    width: 245px;
+    margin-right: 6px;
+}
+.header-nav {
+    margin-right: 180px;
+}
 /* 弹出登陆框按钮 */
 #login-header{
     text-align: center;
@@ -242,7 +250,7 @@ hr {
 
 /*index 界面的样式*/
 .index-main {
-    padding-left: 13%;
+    padding-left: 18%;
 }
 .user-img {
     width: 500px;
@@ -290,6 +298,11 @@ hr {
 .index-sales {
     float: left;
     width: 200px;
+}
+.index-money {
+    float: left;
+    color: red;
+    font-weight: 800;
 }
 /*view 界面*/
 /*发布人*/

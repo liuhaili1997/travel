@@ -14,7 +14,6 @@ import co.xingguo.travelmanage.model.User;
 import co.xingguo.travelmanage.model.UserExample;
 import co.xingguo.travelmanage.services.ViewService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +53,7 @@ public class ViewServiceImpl implements ViewService {
         }
         if ( id == null) {
             //默认的图片
-            String imgUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1587543007161&di=c2f9fd0050132054125776cdadd92e93&imgtype=0&src=http%3A%2F%2Fwww.17qq.com%2Fimg_qqtouxiang%2F88015074.jpeg";
+            String imgUrl = "http://gtd.alicdn.com/bao/uploaded///img.alicdn.com/bao/uploaded/tfscom/TB1RHvaTbvpK1RjSZPiSuvmwXXa_600x600.jpg";
             landscape.setImgUrl(imgUrl);
             landscape.setViewCount(0L);
             landscape.setCommentCount(0L);
@@ -221,5 +220,27 @@ public class ViewServiceImpl implements ViewService {
             return view;
         }).collect(Collectors.toList());
         return viewDtos;
+    }
+
+    @Override
+    public void incViewCount(Long id) {
+        if (null == id) {
+            return;
+        }
+        Landscape landscape = new Landscape();
+        landscape.setId(id);
+        landscape.setViewCount(1L);
+        viewExtendMapper.incViewCount(landscape);
+    }
+
+    @Override
+    public void incCommentCount(Long id) {
+        if (null == id) {
+            return;
+        }
+        Landscape landscape = new Landscape();
+        landscape.setId(id);
+        landscape.setCommentCount(1L);
+        viewExtendMapper.incCommentCount(landscape);
     }
 }

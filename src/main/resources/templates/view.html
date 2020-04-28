@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <title>旅游兴国</title>
+    <title>详细信息展示</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/myproject.css"/>
@@ -30,7 +30,7 @@
                     管理者：<span th:text="${user.name}"></span> |
                     邮箱：<span th:text="${user.email}"></span>|
                     发布时间：<span th:text="${#dates.format(view.ctime,'yyyy-MM-dd HH:mm')}"></span> |
-                    浏览人数：<span th:text="${view.viewCount}"></span>|
+                    浏览次数：<span th:text="${view.viewCount}"></span>|
                     销售量：<span th:text="${view.commentCount}"></span>
                 </span>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
@@ -85,7 +85,7 @@
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div>
-                    <span class="view-manager">主题相关景点</span>
+                    <span class="view-manager">其他安排</span>
                     <ul class="view-href">
                         <li th:each="related:${relationView}">
                             <a th:href="@{'/view/'+ ${related.id}}" th:text="${related.title}"></a>

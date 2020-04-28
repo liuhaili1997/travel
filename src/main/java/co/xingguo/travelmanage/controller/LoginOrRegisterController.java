@@ -1,5 +1,6 @@
 package co.xingguo.travelmanage.controller;
 
+import co.xingguo.travelmanage.dto.UserDto;
 import co.xingguo.travelmanage.enums.UserTypeEnums;
 import co.xingguo.travelmanage.mapper.UserMapper;
 import co.xingguo.travelmanage.model.User;
@@ -19,8 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.UUID;
+
 /**
  * 注册  登录 退出
+ *
  * @author Created by hailitortoise on 2020-04-22
  */
 @Controller
@@ -40,12 +43,13 @@ public class LoginOrRegisterController {
 
     /**
      * 这个是一个比较奇怪的界面 它是一个弹窗，可以post请求，但是不能get请求到这个界面
+     *
      * @param name
      * @param password
      * @return
      */
     @PostMapping("/login")
-    public String login(@RequestParam(name = "name",required = false) String name,
+    public String login(@RequestParam(name = "name", required = false) String name,
                         @RequestParam(name = "password", required = false) String password,
                         HttpServletResponse response, Model model) {
         model.addAttribute("userName", name);
@@ -77,6 +81,7 @@ public class LoginOrRegisterController {
 
     /**
      * 当其他页面点击连接，可以通过这个来跳转界面
+     *
      * @param model model
      * @return 页面
      */
@@ -87,13 +92,14 @@ public class LoginOrRegisterController {
 
     /**
      * 注册用户信息
-     * @param name 姓名
-     * @param password 密码
-     * @param phone 电话
-     * @param email 邮箱
+     *
+     * @param name      姓名
+     * @param password  密码
+     * @param phone     电话
+     * @param email     邮箱
      * @param avatarUrl 头像
-     * @param request 请求
-     * @param model model
+     * @param request   请求
+     * @param model     model
      * @return 返回页面
      */
     @PostMapping("/register")
@@ -139,6 +145,7 @@ public class LoginOrRegisterController {
 
     /**
      * 退出登录，就必须要清除token cookie session
+     *
      * @param request
      * @return
      */
@@ -155,6 +162,54 @@ public class LoginOrRegisterController {
         cookie.setPath("/");
         //重新写入将覆盖之前的cookie
         response.addCookie(cookie);
+        return "redirect:/";
+    }
+
+    @GetMapping("/person")
+    public String person(HttpServletRequest request, Model model) {
+        User user = (User) request.getSession().getAttribute("user");
+        model.addAttribute("user", user);
+        return "person";
+    }
+
+    @PostMapping("/person")
+    public String postPerson(@RequestParam(name = "avatar", required = false) String avatar,
+                             @RequestParam(name = "name", required = false) String name,
+                             @RequestParam(name = "phone", required = false) String phone,
+                             @RequestParam(name = "oldPass", required = false) String oldPass,
+                             @RequestParam(name = "newPass", required = false) String newPass,
+                             @RequestParam(name = "id") Long id,
+                             HttpServletRequest request, Model model,
+                             HttpServletResponse response) {
+        /*回显*/
+        model.addAttribute("avatar", avatar);
+        model.addAttribute("name", name);
+        model.addAttribute("phone", phone);
+        model.addAttribute("newPass", newPass);
+
+        User user = (User) request.getSession().getAttribute("user");
+        if (StringUtils.isNotBlank(oldPass) && !user.getPassword().equals(oldPass)) {
+            model.addAttribute("personError", "输入的密码不是原密码，请重新输入");
+            return "person";
+        }
+        UserDto userDto = new UserDto();
+        if (StringUtils.isNotBlank(avatar)) {
+            userDto.setAvatarUrl(avatar);
+        }
+        if (StringUtils.isNotBlank(name)) {
+            userDto.setName(name);
+        }
+        if (StringUtils.isNotBlank(phone)) {
+            userDto.setPhone(phone);
+        }
+        if (StringUtils.isNotBlank(newPass)) {
+            userDto.setPassword(newPass);
+        }
+        userDto.setId(id);
+        userService.updateUserInfo(userDto);
+        if (StringUtils.isNotBlank(newPass)) {
+            logOut(request,response);
+        }
         return "redirect:/";
     }
 }

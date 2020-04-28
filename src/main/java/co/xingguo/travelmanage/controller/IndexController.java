@@ -33,16 +33,12 @@ public class IndexController {
     @Autowired
     private LandscapeMapper landscapeMapper;
 
-    @Autowired
-    private UserMapper userMapper;
-
 
     @GetMapping("/")
     public String index(@RequestParam(name = "page", defaultValue = "1") Integer currentPage,
                         @RequestParam(name = "pageSize", defaultValue = "3") Integer pageSize,
                         @RequestParam(name = "search", required = false) String search,
                         HttpServletRequest request, Model model) {
-        User user = (User) request.getSession().getAttribute("user");
 
         PageInformationDto pageInformationDto = viewService.list(currentPage, pageSize, search);
         model.addAttribute("viewInfo", pageInformationDto);
@@ -58,6 +54,8 @@ public class IndexController {
         ViewDto viewDto = viewService.getById(id);
         // 根据tag查询相关的tag的景点
         List<ViewDto> viewDtos = viewService.selectRelated(viewDto);
+        //增加阅读数
+        viewService.incViewCount(id);
         model.addAttribute("view", viewDto);
         model.addAttribute("user", viewDto.getUser());
         model.addAttribute("relationView", viewDtos);
@@ -73,7 +71,5 @@ public class IndexController {
         }
         return "redirect:/";
     }
-
-
 
 }

@@ -144,7 +144,7 @@ public class PublishController {
 
     /**
      * 新增酒店记录
-     *
+     * todo 现在没有实现的时间，可以留着在后面优化添加
      * @param name        标题
      * @param address     地址
      * @param price       价格

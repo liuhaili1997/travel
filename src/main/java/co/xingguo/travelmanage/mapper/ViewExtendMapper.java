@@ -32,4 +32,18 @@ public interface ViewExtendMapper {
      * @return 相关的集合
      */
     List<Landscape> selectRelated(Landscape landscape);
+
+    /**
+     * 增加阅读数量
+     *
+     * @param landscape 导游对象
+     */
+    void incViewCount(Landscape landscape);
+
+    /**
+     * 增加订单数
+     *
+     * @param landscape 导游对象
+     */
+    void incCommentCount(Landscape landscape);
 }
