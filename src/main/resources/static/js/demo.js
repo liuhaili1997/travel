@@ -145,6 +145,21 @@ function showSelectTag() {
 /*view---tag*/
 function showViewTag() {
     $("#view-tag").show();
+
+}
+
+function showViewTag3() {
+    $("#view-tag3").show();
+}
+
+function showViewTag4() {
+    $("#view-tag4").show();
+
+}
+
+function showViewTag5() {
+    $("#view-tag5").show();
+
 }
 function viewTag(e) {
     var value = e.getAttribute("data-tag");
@@ -158,6 +173,52 @@ function viewTag(e) {
         } else {
             /*没有tag，将其作为第一个tag*/
             $("#tag").val(value)
+        }
+    }
+}
+
+function viewTag3(e) {
+    var value = e.getAttribute("data-tag");
+    var previous = $("#tag3").val();
+    /*判断tag是否已经存在标签中了*/
+    if (previous.indexOf(value) == -1) {
+        //是否有原有的标签
+        if (previous) {
+            /*有tag，将新的添加在后面*/
+            $("#tag3").val(previous + ',' + value);
+        } else {
+            /*没有tag，将其作为第一个tag*/
+            $("#tag3").val(value)
+        }
+    }
+}
+function viewTag4(e) {
+    var value = e.getAttribute("data-tag");
+    var previous = $("#tag4").val();
+    /*判断tag是否已经存在标签中了*/
+    if (previous.indexOf(value) == -1) {
+        //是否有原有的标签
+        if (previous) {
+            /*有tag，将新的添加在后面*/
+            $("#tag4").val(previous + ',' + value);
+        } else {
+            /*没有tag，将其作为第一个tag*/
+            $("#tag4").val(value)
+        }
+    }
+}
+function viewTag5(e) {
+    var value = e.getAttribute("data-tag");
+    var previous = $("#tag5").val();
+    /*判断tag是否已经存在标签中了*/
+    if (previous.indexOf(value) == -1) {
+        //是否有原有的标签
+        if (previous) {
+            /*有tag，将新的添加在后面*/
+            $("#tag5").val(previous + ',' + value);
+        } else {
+            /*没有tag，将其作为第一个tag*/
+            $("#tag5").val(value)
         }
     }
 }

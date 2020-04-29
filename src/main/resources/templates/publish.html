@@ -229,15 +229,315 @@
             </div>
             <!--特色食物-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'specialfood'}">
+                <form action="/publish/landscape" method="post">
+                    <input type="hidden" name="id" th:value="${id}">
+                    <div class="form-group form-tag">
+                        <label for="viewTitle">景点标题:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon3">@</span>
+                            <input type="text" name="viewTitle" id="viewTitle3" class="form-control"
+                                   placeholder="景区取名……" autocomplete="off" th:value="${viewTitle}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="openTime">开放时间:</label>
+                        <div class="input-group publish-view-input">
+                            <input type="text" name="openTime" id="openTime3"
+                                   class="form-control publish-view-input-content"
+                                   placeholder="按：6:00-18:00 格式书写" th:value="${openTime}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="address">地址:</label>
+                        <div class="input-group publish-view-input">
+                            <input type="text" name="address" id="address3"
+                                   class="form-control publish-view-input-content"
+                                   placeholder="记得用省市开头……" th:value="${address}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="price">价格:</label>
+                        <div class="input-group publish-view-input">
+                            <input type="text" name="price" id="price3" class="form-control publish-view-input-content"
+                                   placeholder="不写则为免费……" autocomplete="off"
+                                   aria-describedby="basic-addon1" th:value="${price}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="description">描述文本：</label>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 publish-view-textarea" id="view-editor3">
+                        <textarea name="description" id="description3" class="form-control"
+                                  style="display: none" cols="30" rows="10" th:text="${description}"></textarea>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            editormd("view-editor3", {
+                                width: "100%",
+                                height: "400px",
+                                path: "/js/lib/",
+                                /*实时生成视图*/
+                                delay: 0,
+                                /*false:初始化时不展示半边的样式，点击眼睛生成相应的视图*/
+                                watch: false,
+                                placeholder: "请详细的介绍你要发布的景点.....",
+                                /*支持上传图片的功能*/
+                                imageUpload: true,
+                                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                                /*fileController:显示文件夹选择图片获得地址*/
+                                imageUploadURL: "/file/upload"
 
+                            });
+                        });
+                    </script>
+                    <div class="form-group form-tag">
+                        <label for="tag">添加标签：</label>
+                        <input type="text" class="form-control" id="tag3" name="tag"
+                               autocomplete="off" placeholder="输入标签，以英文 , 号隔开" th:value="${tag}" onclick="showViewTag3()">
+                        <div id="view-tag3" class="publish-tag-content">
+                            <!--new tables-->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" th:each="selectTag,selectTagStatus:${tags}" th:class="${selectTagStatus.first? 'active':''}">
+                                    <a th:href="${'#'+selectTag.categoryName}" aria-controls="home" role="tab"
+                                       data-toggle="tab" th:text="${selectTag.categoryName}"></a>
+                                </li>
+                            </ul>
+                            <!--tables panes-->
+                            <div class="tab-content tab-margin-top">
+                                <div role="tabpanel" th:id="${selectTag.categoryName}"
+                                     th:each="selectTag,selectTagStatus:${tags}"
+                                     th:class="${selectTagStatus.first? 'tab-pane active':'tab-pane'}">
+                                <span class="label label-info tag-question-margin" th:each="tagList:${selectTag.tags}">
+                                    <span class="glyphicon glyphicon-tags" onclick="viewTag3(this)"
+                                          th:data-tag="${tagList}">
+                                       <span th:text="${tagList}"></span>
+                                    </span>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid main">
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="">
+                                <div class="alert alert-danger btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "
+                                     id="viewError3" th:if="${viewError != null}" th:text="${viewError}"></div>
+                            </div>
+                            <div class="btn-red-info">
+                                <button type="submit" class="btn btn-success btn-publish " onclick="alterError()">发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
             <!--著名小吃-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'refreshments'}">
+                <form action="/publish/landscape" method="post">
+                    <input type="hidden" name="id" th:value="${id}">
+                    <div class="form-group form-tag">
+                        <label for="viewTitle">景点标题:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon4">@</span>
+                            <input type="text" name="viewTitle" id="viewTitle4" class="form-control"
+                                   placeholder="景区取名……" autocomplete="off" th:value="${viewTitle}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="openTime">开放时间:</label>
+                        <div class="input-group publish-view-input">
+                            <input type="text" name="openTime" id="openTime4"
+                                   class="form-control publish-view-input-content"
+                                   placeholder="按：6:00-18:00 格式书写" th:value="${openTime}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="address">地址:</label>
+                        <div class="input-group publish-view-input">
+                            <input type="text" name="address" id="address4"
+                                   class="form-control publish-view-input-content"
+                                   placeholder="记得用省市开头……" th:value="${address}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="price">价格:</label>
+                        <div class="input-group publish-view-input">
+                            <input type="text" name="price" id="price4" class="form-control publish-view-input-content"
+                                   placeholder="不写则为免费……" autocomplete="off"
+                                   aria-describedby="basic-addon1" th:value="${price}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="description">描述文本：</label>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 publish-view-textarea" id="view-editor4">
+                        <textarea name="description" id="description4" class="form-control"
+                                  style="display: none" cols="30" rows="10" th:text="${description}"></textarea>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            editormd("view-editor4", {
+                                width: "100%",
+                                height: "400px",
+                                path: "/js/lib/",
+                                /*实时生成视图*/
+                                delay: 0,
+                                /*false:初始化时不展示半边的样式，点击眼睛生成相应的视图*/
+                                watch: false,
+                                placeholder: "请详细的介绍你要发布的景点.....",
+                                /*支持上传图片的功能*/
+                                imageUpload: true,
+                                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                                /*fileController:显示文件夹选择图片获得地址*/
+                                imageUploadURL: "/file/upload"
 
+                            });
+                        });
+                    </script>
+                    <div class="form-group form-tag">
+                        <label for="tag">添加标签：</label>
+                        <input type="text" class="form-control" id="tag4" name="tag"
+                               autocomplete="off" placeholder="输入标签，以英文 , 号隔开" th:value="${tag}" onclick="showViewTag4()">
+                        <div id="view-tag4" class="publish-tag-content">
+                            <!--new tables-->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" th:each="selectTag,selectTagStatus:${tags}" th:class="${selectTagStatus.first? 'active':''}">
+                                    <a th:href="${'#'+selectTag.categoryName}" aria-controls="home" role="tab"
+                                       data-toggle="tab" th:text="${selectTag.categoryName}"></a>
+                                </li>
+                            </ul>
+                            <!--tables panes-->
+                            <div class="tab-content tab-margin-top">
+                                <div role="tabpanel" th:id="${selectTag.categoryName}"
+                                     th:each="selectTag,selectTagStatus:${tags}"
+                                     th:class="${selectTagStatus.first? 'tab-pane active':'tab-pane'}">
+                                <span class="label label-info tag-question-margin" th:each="tagList:${selectTag.tags}">
+                                    <span class="glyphicon glyphicon-tags" onclick="viewTag4(this)"
+                                          th:data-tag="${tagList}">
+                                       <span th:text="${tagList}"></span>
+                                    </span>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid main">
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="">
+                                <div class="alert alert-danger btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "
+                                     id="viewError4" th:if="${viewError != null}" th:text="${viewError}"></div>
+                            </div>
+                            <div class="btn-red-info">
+                                <button type="submit" class="btn btn-success btn-publish " onclick="alterError()">发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
             <!--历史-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'history'}">
+                <form action="/publish/landscape" method="post">
+                    <input type="hidden" name="id" th:value="${id}">
+                    <div class="form-group form-tag">
+                        <label for="viewTitle">景点标题:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon5">@</span>
+                            <input type="text" name="viewTitle" id="viewTitle5" class="form-control"
+                                   placeholder="景区取名……" autocomplete="off" th:value="${viewTitle}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="openTime">开放时间:</label>
+                        <div class="input-group publish-view-input">
+                            <input type="text" name="openTime" id="openTime5"
+                                   class="form-control publish-view-input-content"
+                                   placeholder="按：6:00-18:00 格式书写" th:value="${openTime}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="address">地址:</label>
+                        <div class="input-group publish-view-input">
+                            <input type="text" name="address" id="address5"
+                                   class="form-control publish-view-input-content"
+                                   placeholder="记得用省市开头……" th:value="${address}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="price">价格:</label>
+                        <div class="input-group publish-view-input">
+                            <input type="text" name="price" id="price5" class="form-control publish-view-input-content"
+                                   placeholder="不写则为免费……" autocomplete="off"
+                                   aria-describedby="basic-addon1" th:value="${price}">
+                        </div>
+                    </div>
+                    <div class="form-group form-tag">
+                        <label for="description">描述文本：</label>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 publish-view-textarea" id="view-editor5">
+                        <textarea name="description" id="description5" class="form-control"
+                                  style="display: none" cols="30" rows="10" th:text="${description}"></textarea>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            editormd("view-editor5", {
+                                width: "100%",
+                                height: "400px",
+                                path: "/js/lib/",
+                                /*实时生成视图*/
+                                delay: 0,
+                                /*false:初始化时不展示半边的样式，点击眼睛生成相应的视图*/
+                                watch: false,
+                                placeholder: "请详细的介绍你要发布的景点.....",
+                                /*支持上传图片的功能*/
+                                imageUpload: true,
+                                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                                /*fileController:显示文件夹选择图片获得地址*/
+                                imageUploadURL: "/file/upload"
 
+                            });
+                        });
+                    </script>
+                    <div class="form-group form-tag">
+                        <label for="tag">添加标签：</label>
+                        <input type="text" class="form-control" id="tag5" name="tag"
+                               autocomplete="off" placeholder="输入标签，以英文 , 号隔开" th:value="${tag}" onclick="showViewTag5()">
+                        <div id="view-tag5" class="publish-tag-content">
+                            <!--new tables-->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" th:each="selectTag,selectTagStatus:${tags}" th:class="${selectTagStatus.first? 'active':''}">
+                                    <a th:href="${'#'+selectTag.categoryName}" aria-controls="home" role="tab"
+                                       data-toggle="tab" th:text="${selectTag.categoryName}"></a>
+                                </li>
+                            </ul>
+                            <!--tables panes-->
+                            <div class="tab-content tab-margin-top">
+                                <div role="tabpanel" th:id="${selectTag.categoryName}"
+                                     th:each="selectTag,selectTagStatus:${tags}"
+                                     th:class="${selectTagStatus.first? 'tab-pane active':'tab-pane'}">
+                                <span class="label label-info tag-question-margin" th:each="tagList:${selectTag.tags}">
+                                    <span class="glyphicon glyphicon-tags" onclick="viewTag5(this)"
+                                          th:data-tag="${tagList}">
+                                       <span th:text="${tagList}"></span>
+                                    </span>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid main">
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="">
+                                <div class="alert alert-danger btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "
+                                     id="viewError5" th:if="${viewError != null}" th:text="${viewError}"></div>
+                            </div>
+                            <div class="btn-red-info">
+                                <button type="submit" class="btn btn-success btn-publish " onclick="alterError()">发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <!--左边的导航栏-->
