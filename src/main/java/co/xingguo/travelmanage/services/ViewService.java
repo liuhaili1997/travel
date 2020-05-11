@@ -30,7 +30,7 @@ public interface ViewService {
      * @param search      搜索条件
      * @return 结果
      */
-    PageInformationDto list(Integer currentPage, Integer pageSize, String search);
+    PageInformationDto list(Integer currentPage, Integer pageSize, String search, String tag);
 
     /**
      * 根据id查询景点的相关信息和管理员的信息

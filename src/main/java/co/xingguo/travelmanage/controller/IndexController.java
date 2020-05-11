@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- *
  * @author Created by hailitortoise on 2020-04-17
  */
 @Controller
@@ -40,7 +39,7 @@ public class IndexController {
                         @RequestParam(name = "search", required = false) String search,
                         HttpServletRequest request, Model model) {
 
-        PageInformationDto pageInformationDto = viewService.list(currentPage, pageSize, search);
+        PageInformationDto pageInformationDto = viewService.list(currentPage, pageSize, search,null);
         model.addAttribute("viewInfo", pageInformationDto);
         //用于回显数据
         model.addAttribute("search", search);
@@ -72,4 +71,38 @@ public class IndexController {
         return "redirect:/";
     }
 
+    /*以下将用于展示各个区的景区信息*/
+
+    /**
+     * 展示省内景点
+     *
+     * @param currentPage 当前页
+     * @param pageSize 每页条数
+     * @param search 搜索条件
+     * @param model model
+     * @return 返回指定页面
+     */
+    @GetMapping("/viewName/{action}")
+    public String displayProvince(@RequestParam(name = "page", defaultValue = "1") Integer currentPage,
+                                  @RequestParam(name = "pageSize", defaultValue = "3") Integer pageSize,
+                                  @RequestParam(name = "search", required = false) String search,
+                                  Model model, @PathVariable(name = "action") String action) {
+        if ("province".equals(action)) {
+            PageInformationDto pageInformationDto = viewService.list(currentPage, pageSize, search,"省内");
+            model.addAttribute("viewInfo", pageInformationDto);
+            model.addAttribute("search", search);
+            model.addAttribute("tag", "省内景点");
+        } else if ("domestic".equals(action)) {
+            PageInformationDto pageInformationDto = viewService.list(currentPage, pageSize, search,"国内");
+            model.addAttribute("viewInfo", pageInformationDto);
+            model.addAttribute("search", search);
+            model.addAttribute("tag", "国内景点");
+        } else if ("abroad".equals(action)) {
+            PageInformationDto pageInformationDto = viewService.list(currentPage, pageSize, search,"海外");
+            model.addAttribute("viewInfo", pageInformationDto);
+            model.addAttribute("search", search);
+            model.addAttribute("tag", "海外景点");
+        }
+        return "province";
+    }
 }

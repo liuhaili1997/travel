@@ -57,7 +57,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4>个人信息修改：</h4>
                 <hr />
-                <form action="/person" method="post">
+                <form action="/person" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" th:value="${session.user.id}">
                     <div class="form-group form-tag">
                         <label for="avatar">头像[请输入图片网上地址]:</label>
@@ -67,6 +67,55 @@
                                    placeholder="头像地址，来自网上的地址……" autocomplete="off" th:value="${user!= null?user.avatarUrl:avatar}">
                         </div>
                     </div>
+                    <div class="form-group form-tag">
+                        <label for="file">本地图片[两者都存在，将优先上级]:</label>
+                        <div class="input-group">
+                            <!--multiple="multiple" 可以选多张图片-->
+                            <input type="file" name="file" id="file" accept="image/jpeg,image/jpg,image/png" class="form-control">
+                        </div>
+                        <div class="box">
+                            <img id="imgShow"/>
+                        </div>
+                    </div>
+                    <script>
+                        $('#file').change(function(){
+                            var $file = $(this);
+                            var fileObj = $file[0];
+                            var windowURL = window.URL || window.webkitURL;
+                            var dataURL;
+                            var $img = $("#imgShow");
+                            if (fileObj && fileObj.files && fileObj.files[0]) {
+                                dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                                $img.attr('src', dataURL);
+                            } else {
+                                dataURL = $file.val();
+                                var imgObj = document.getElementById("imgShow");
+                                imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                                imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+                            }
+                        });
+                    </script>
+                    <!--<script>
+                        //在input file内容改变的时候触发事件
+                        $('#filed').change(function(){
+                            //获取input file的files文件数组;
+                            //$('#filed')获取的是jQuery对象，.get(0)转为原生对象;
+                            //这边默认只能选一个，但是存放形式仍然是数组，所以取第一个元素使用[0];
+                            var file = $('#filed').get(0).files[0];
+                            //创建用来读取此文件的对象
+                            var reader = new FileReader();
+                            //使用该对象读取file文件
+                            reader.readAsDataURL(file);
+                            //读取文件成功后执行的方法函数
+                            reader.onload=function(e){
+                                //读取成功后返回的一个参数e，整个的一个进度事件
+                                console.log(e);
+                                //选择所要显示图片的img，要赋值给img的src就是e中target下result里面
+                                //的base64编码格式的地址
+                                $('#imgShow').get(0).src = e.target.result;
+                            }
+                        })
+                    </script>-->
                     <div class="form-group form-tag">
                         <label for="name">用户名:</label>
                         <div class="input-group publish-view-input">

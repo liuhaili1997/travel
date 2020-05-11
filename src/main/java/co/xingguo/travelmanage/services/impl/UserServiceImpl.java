@@ -11,8 +11,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * 实现接口隔离
@@ -86,14 +90,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserInfo(UserDto userDto) {
+    public void updateUserInfo(UserDto userDto, MultipartFile file) {
+
+        // 图片路径
+        String imgUrl = null;
+        String filename = null;
+        String uploadDir = "C://Users//lhl03//Videos//git//repository//travelmanage//src//main//resources//static//images//useravatar/";
         User user = userMapper.selectByPrimaryKey(userDto.getId());
         if (user == null) {
             throw new CustomizeException(CustomizeErrorEnums.USER_IS_NOT_EXIT);
         }
+        try {
+            //上传
+            if (null != file) {
+                filename = upload(file, uploadDir, Objects.requireNonNull(file.getOriginalFilename()));
+            }
+            if (StringUtils.isNotBlank(filename)) {
+                //还需要加入/images/
+                imgUrl = new StringBuilder("/images/").append(new File(uploadDir).getName()).append("/").append(filename).toString();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String avatar = userDto.getAvatarUrl();
         if (StringUtils.isNotBlank(avatar)) {
             user.setAvatarUrl(avatar);
+        } else if (StringUtils.isNotBlank(imgUrl)) {
+            user.setAvatarUrl(imgUrl);
         }
         String name = userDto.getName();
         if (StringUtils.isNotBlank(name)) {
@@ -107,11 +131,25 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isNotBlank(password)) {
             user.setPassword(password);
         }
+
         Long currentTime = System.currentTimeMillis();
         user.setUtime(currentTime);
         int i = userMapper.updateByPrimaryKey(user);
         if (i != 1) {
             throw new CustomizeException(CustomizeErrorEnums.USER_UPDATE_IS_FAIL);
         }
+    }
+
+    private String upload(MultipartFile file, String path, String fileName) throws Exception {
+        // 生成新的文件名
+        String realPath = path + "/" + UUID.randomUUID().toString().replace("-", "") + fileName.substring(fileName.lastIndexOf("."));
+        File dest = new File(realPath);
+        //判断文件父目录是否存在
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdir();
+        }
+        //保存文件
+        file.transferTo(dest);
+        return dest.getName();
     }
 }

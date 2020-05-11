@@ -23,4 +23,9 @@ public class QuestionQueryDto {
      * 每页大小
      */
     private Integer pageSize;
+
+    /**
+     * tag的选择
+     */
+    private String tag;
 }

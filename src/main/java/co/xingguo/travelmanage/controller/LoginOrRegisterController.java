@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -178,6 +179,7 @@ public class LoginOrRegisterController {
                              @RequestParam(name = "phone", required = false) String phone,
                              @RequestParam(name = "oldPass", required = false) String oldPass,
                              @RequestParam(name = "newPass", required = false) String newPass,
+                             @RequestParam(name = "file", required = false) MultipartFile file,
                              @RequestParam(name = "id") Long id,
                              HttpServletRequest request, Model model,
                              HttpServletResponse response) {
@@ -190,6 +192,10 @@ public class LoginOrRegisterController {
         User user = (User) request.getSession().getAttribute("user");
         if (StringUtils.isNotBlank(oldPass) && !user.getPassword().equals(oldPass)) {
             model.addAttribute("personError", "输入的密码不是原密码，请重新输入");
+            return "person";
+        }
+        if (StringUtils.isNotBlank(avatar) && null != file) {
+            model.addAttribute("personError", "两者不可以同时输入，选择你需要");
             return "person";
         }
         UserDto userDto = new UserDto();
@@ -206,7 +212,7 @@ public class LoginOrRegisterController {
             userDto.setPassword(newPass);
         }
         userDto.setId(id);
-        userService.updateUserInfo(userDto);
+        userService.updateUserInfo(userDto,file);
         if (StringUtils.isNotBlank(newPass)) {
             logOut(request,response);
         }

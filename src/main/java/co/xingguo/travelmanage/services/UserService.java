@@ -2,6 +2,7 @@ package co.xingguo.travelmanage.services;
 
 import co.xingguo.travelmanage.dto.UserDto;
 import co.xingguo.travelmanage.model.User;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 实现用户表的查询和各种操作
@@ -19,6 +20,7 @@ public interface UserService {
      * 更新用户信息
      *
      * @param userDto 拓展类
+     * @param file 图片
      */
-    void updateUserInfo(UserDto userDto);
+    void updateUserInfo(UserDto userDto, MultipartFile file);
 }
