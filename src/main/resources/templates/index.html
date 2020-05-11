@@ -56,17 +56,18 @@
                         </dl>
                         <dl>
                             <dt>价格：</dt>
+                            <dd class="pull-left">￥</dd>
                             <dd class="index-money" th:text="${view.price}"></dd>
-                            <dd>￥</dd>
+                            <div style="clear: both"></div>
                         </dl>
                         <dl class="index-sales">
                             <dt>浏览人数：</dt>
                             <dd th:text="${view.viewCount}"></dd>
                         </dl>
-                        <dl class="index-sales">
+                        <!--<dl class="index-sales">
                             <dt>总销售量：</dt>
                             <dd th:text="${view.commentCount}"></dd>
-                        </dl>
+                        </dl>-->
                     </div>
                 </div>
                 <hr/>
