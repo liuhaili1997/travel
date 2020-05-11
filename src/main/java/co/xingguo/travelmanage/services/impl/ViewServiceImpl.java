@@ -105,7 +105,7 @@ public class ViewServiceImpl implements ViewService {
     }
 
     @Override
-    public PageInformationDto list(Integer currentPage, Integer pageSize, String search) {
+    public PageInformationDto list(Integer currentPage, Integer pageSize, String search, String tag) {
 
         PageInformationDto<ViewDto> pageInformationDto = new PageInformationDto<>();
 
@@ -117,7 +117,12 @@ public class ViewServiceImpl implements ViewService {
             //replace:   search = String.join("|", searchs);
         }
         QuestionQueryDto questionQueryDto = new QuestionQueryDto();
-        questionQueryDto.setSearch(search);
+        if (StringUtils.isNotBlank(search)) {
+            questionQueryDto.setSearch(search);
+        }
+        if (StringUtils.isNotBlank(tag)) {
+            questionQueryDto.setTag(tag);
+        }
         //根据查询获取具体的数量进行分页
         Integer total = viewExtendMapper.countByExample(questionQueryDto);
 
