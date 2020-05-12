@@ -38,7 +38,11 @@
                 </dl>
                 <dl>
                     <dt>头像地址：</dt>
-                    <dd th:text="${session.user.avatarUrl}"></dd>
+                    <dd>
+                        <div class="box-mean">
+                            <img style="width: 100%; height: 100%" th:src="${session.user.avatarUrl}">
+                        </div>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>类型[0:游客  1:管理者]：</dt>
