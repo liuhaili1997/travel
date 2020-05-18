@@ -372,3 +372,35 @@ hr {
     border-radius: 5px;
     margin-bottom: 20px;
 }
+
+/*view 中的预定按钮*/
+.btn-reservation {
+    margin-bottom: 20px;
+}
+.view-reservation {
+    float: right;
+}
+.btn-reservation-one {
+    margin-right: 20px;
+}
+
+/*publish reservation*/
+.publish-reservation-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 5px;
+}
+.media-top {
+    vertical-align: top;
+
+}
+.publish-reservation-viewTitle {
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0C0C0C;
+}
+.publish-reservation-viewTitle:hover {
+    color: #00aaaa;
+    cursor: pointer;
+}
