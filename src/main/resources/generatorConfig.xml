@@ -54,5 +54,6 @@
         </table>
         <table tableName="landscape" domainObjectName="Landscape" ></table>
         <table tableName="hotel" domainObjectName="Hotel" ></table>
+        <table tableName="reservation" domainObjectName="Reservation" ></table>
     </context>
 </generatorConfiguration>

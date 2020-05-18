@@ -222,3 +222,27 @@ function viewTag5(e) {
         }
     }
 }
+
+function post() {
+    $.ajax({
+        success: function (response) {
+            if (response.code == 200) {
+                /*$("#comment_section").hide()*/
+                window.location.reload();
+            } else {
+                if (response.code == 3001) {
+                    var isAccepted = confirm(response.message);
+                    if (isAccepted) {
+                        window.open("http://localhost:9999/login")
+                        window.localStorage.setItem("closeable", true);
+                    }
+                } else {
+                    alert(response.message)
+                }
+            }
+            console.log(response)
+        },
+        dataType: "json",
+        contentType: 'application/json'
+    });
+}

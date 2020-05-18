@@ -435,109 +435,79 @@
                     </div>
                 </form>
             </div>
-            <!--历史-->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'history'}">
-                <form action="/publish/landscape" method="post">
-                    <input type="hidden" name="id" th:value="${id}">
-                    <div class="form-group form-tag">
-                        <label for="viewTitle">景点标题:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon5">@</span>
-                            <input type="text" name="viewTitle" id="viewTitle5" class="form-control"
-                                   placeholder="景区取名……" autocomplete="off" th:value="${viewTitle}">
-                        </div>
+            <!--预定记录-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'appointmentRecord'}">
+                <!--详情展示界面-->
+                <div class="media" th:each="reservations:${reservation.data}">
+                    <div class="media-left media-top">
+                        <a href="#">
+                            <img class="media-object publish-reservation-img" th:src="${reservations.avatar}" alt="用户头像">
+                        </a>
                     </div>
-                    <div class="form-group form-tag">
-                        <label for="openTime">开放时间:</label>
-                        <div class="input-group publish-view-input">
-                            <input type="text" name="openTime" id="openTime5"
-                                   class="form-control publish-view-input-content"
-                                   placeholder="按：6:00-18:00 格式书写" th:value="${openTime}">
-                        </div>
+                    <div class="media-body index-info">
+                        <h4 class="media-heading" th:text="${reservations.userName}"></h4>
+                        <hr />
+                        <dl>
+                            <dt>用户预定了景区 </dt>
+                            <dd>
+                                <a class="publish-reservation-viewTitle" th:href="@{'/view/'+ ${reservations.viewId}}"
+                                   th:text="${reservations.viewName}"></a>
+                            </dd>
+                        </dl>
+                        <dl th:if="${reservations.phone != null && reservations.phone != ' '}">
+                            <dt>用户联系电话：</dt>
+                            <dd th:text="${reservations.phone}">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>邮箱：</dt>
+                            <dd th:text="${reservations.email}"></dd>
+                        </dl>
+                        <dl>
+                            <dt>此景区的价位：</dt>
+                            <dd class="index-money" th:text="${reservations.viewPrice}"></dd>
+                            <dd>￥</dd>
+                        </dl>
+                        <dl>
+                            <dt>预约时间：</dt>
+                            <dd th:text="${#dates.format(reservations.utime,'yyyy-MM-dd HH:mm')}"></dd>
+                        </dl>
                     </div>
-                    <div class="form-group form-tag">
-                        <label for="address">地址:</label>
-                        <div class="input-group publish-view-input">
-                            <input type="text" name="address" id="address5"
-                                   class="form-control publish-view-input-content"
-                                   placeholder="记得用省市开头……" th:value="${address}">
-                        </div>
-                    </div>
-                    <div class="form-group form-tag">
-                        <label for="price">价格:</label>
-                        <div class="input-group publish-view-input">
-                            <input type="text" name="price" id="price5" class="form-control publish-view-input-content"
-                                   placeholder="不写则为免费……" autocomplete="off"
-                                   aria-describedby="basic-addon1" th:value="${price}">
-                        </div>
-                    </div>
-                    <div class="form-group form-tag">
-                        <label for="description">描述文本：</label>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 publish-view-textarea" id="view-editor5">
-                        <textarea name="description" id="description5" class="form-control"
-                                  style="display: none" cols="30" rows="10" th:text="${description}"></textarea>
-                        </div>
-                    </div>
-                    <script type="text/javascript">
-                        $(function () {
-                            editormd("view-editor5", {
-                                width: "100%",
-                                height: "400px",
-                                path: "/js/lib/",
-                                /*实时生成视图*/
-                                delay: 0,
-                                /*false:初始化时不展示半边的样式，点击眼睛生成相应的视图*/
-                                watch: false,
-                                placeholder: "请详细的介绍你要发布的景点.....",
-                                /*支持上传图片的功能*/
-                                imageUpload: true,
-                                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                                /*fileController:显示文件夹选择图片获得地址*/
-                                imageUploadURL: "/file/upload"
-
-                            });
-                        });
-                    </script>
-                    <div class="form-group form-tag">
-                        <label for="tag">添加标签：</label>
-                        <input type="text" class="form-control" id="tag5" name="tag"
-                               autocomplete="off" placeholder="输入标签，以英文 , 号隔开" th:value="${tag}" onclick="showViewTag5()">
-                        <div id="view-tag5" class="publish-tag-content">
-                            <!--new tables-->
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" th:each="selectTag,selectTagStatus:${tags}" th:class="${selectTagStatus.first? 'active':''}">
-                                    <a th:href="${'#'+selectTag.categoryName}" aria-controls="home" role="tab"
-                                       data-toggle="tab" th:text="${selectTag.categoryName}"></a>
-                                </li>
-                            </ul>
-                            <!--tables panes-->
-                            <div class="tab-content tab-margin-top">
-                                <div role="tabpanel" th:id="${selectTag.categoryName}"
-                                     th:each="selectTag,selectTagStatus:${tags}"
-                                     th:class="${selectTagStatus.first? 'tab-pane active':'tab-pane'}">
-                                <span class="label label-info tag-question-margin" th:each="tagList:${selectTag.tags}">
-                                    <span class="glyphicon glyphicon-tags" onclick="viewTag5(this)"
-                                          th:data-tag="${tagList}">
-                                       <span th:text="${tagList}"></span>
-                                    </span>
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-fluid main">
-                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="">
-                                <div class="alert alert-danger btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "
-                                     id="viewError5" th:if="${viewError != null}" th:text="${viewError}"></div>
-                            </div>
-                            <div class="btn-red-info">
-                                <button type="submit" class="btn btn-success btn-publish " onclick="alterError()">发布
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+                </div>
+                <!--分页-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li th:if="${reservation.showFirstPage}">
+                                <a th:href="@{'/publish/' + ${section}(page = ${1})}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&lt;&lt;</span>
+                                </a>
+                            </li>
+                            <li th:if="${reservation.showPrevious}">
+                                <a th:href="@{'/publish/' + ${section}(page=${reservation.currentPage - 1})}" aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+                            <li th:each="page : ${reservation.pages}"
+                                th:class="${reservation.currentPage == page}?'active':''">
+                                <a th:href="@{'/publish/' + ${section}(page=${page})}" th:text="${page}"></a>
+                            </li>
+                            <li th:if="${reservation.showNext}">
+                                <a th:href="@{'/publish/' + ${section}(page=${reservation.currentPage + 1})}" aria-label="Previous">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li th:if="${reservation.showEndPage}">
+                                <!--配置当前页的路径-->
+                                <a th:href="@{'/publish/' + ${section}(page=${reservation.totalPage})}" aria-label="Previous">
+                                    <span aria-hidden="true">&gt;&gt;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
         <!--左边的导航栏-->
@@ -547,7 +517,7 @@
                 <a href="/publish/guesthouse" th:class="${section == 'guesthouse'} ? 'active list-group-item' : 'list-group-item'">酒店</a>
                 <a href="/publish/specialfood" th:class="${section == 'specialfood'} ? 'active list-group-item' : 'list-group-item'">著名菜系</a>
                 <a href="/publish/refreshments" th:class="${section == 'refreshments'} ? 'active list-group-item' : 'list-group-item'">特色小吃</a>
-                <a href="/publish/history" th:class="${section == 'history'} ? 'active list-group-item' : 'list-group-item'">相关历史</a>
+                <a href="/publish/appointmentRecord" th:class="${section == 'appointmentRecord'} ? 'active list-group-item' : 'list-group-item'">用户预约记录</a>
             </div>
         </div>
     </div>

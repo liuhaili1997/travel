@@ -52,6 +52,16 @@
                     </span>
                 </div>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-reservation" th:if="${session.user != null}">
+                    <div class="view-reservation">
+                        <a th:href="@{'/reservation/delete/'+ ${view.id}}" class="btn-reservation-one">
+                            <button type="button" class="btn btn-success btn-float-right">取消订单</button>
+                        </a>
+                        <a th:href="@{'/reservation/'+ ${view.id}}">
+                            <button type="button" class="btn btn-success btn-float-right">预定</button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <!--右边的信息-->

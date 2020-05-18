@@ -1,11 +1,13 @@
 package co.xingguo.travelmanage.controller;
 
 import co.xingguo.travelmanage.cache.TagCache;
+import co.xingguo.travelmanage.dto.PageInformationDto;
 import co.xingguo.travelmanage.dto.ViewDto;
 import co.xingguo.travelmanage.model.Hotel;
 import co.xingguo.travelmanage.model.Landscape;
 import co.xingguo.travelmanage.model.User;
 import co.xingguo.travelmanage.services.HotelService;
+import co.xingguo.travelmanage.services.ReservationService;
 import co.xingguo.travelmanage.services.ViewService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class PublishController {
     @Autowired
     private HotelService hotelService;
 
+    @Autowired
+    private ReservationService reservationService;
+
 
     /**
      * 一个页面多级目录显示
@@ -43,7 +48,10 @@ public class PublishController {
      * @return 返回页面
      */
     @GetMapping("/publish/{action}")
-    public String publish(@PathVariable(name = "action") String action, Model model, HttpServletRequest request) {
+    public String publish(@PathVariable(name = "action") String action, Model model, HttpServletRequest request,
+                          @RequestParam(name = "search", required = false) String search,
+                          @RequestParam(name = "page", defaultValue = "1") Integer currentPage,
+                          @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize) {
         //获取session内部的user，判断是否存在，才有权限
         User user = (User) request.getSession().getAttribute("user");
         if (null == user) {
@@ -60,9 +68,12 @@ public class PublishController {
         } else if ("refreshments".equals(action)) {
             model.addAttribute("section", "refreshments");
             model.addAttribute("sectionName", "特色小吃");
-        } else if ("history".equals(action)) {
-            model.addAttribute("section", "history");
-            model.addAttribute("sectionName", "相关历史");
+        } else if ("appointmentRecord".equals(action)) {
+            model.addAttribute("section", "appointmentRecord");
+            model.addAttribute("sectionName", "预约记录");
+            PageInformationDto pageInformationDto = reservationService.list(currentPage, pageSize, search);
+            model.addAttribute("reservation", pageInformationDto);
+            model.addAttribute("search", search);
         } else {
             model.addAttribute("section", "landscape");
             model.addAttribute("sectionName", "景区");
@@ -91,7 +102,7 @@ public class PublishController {
                               @RequestParam(name = "price", required = false) BigDecimal price,
                               @RequestParam(name = "description", required = false) String description,
                               @RequestParam(name = "tag", required = false) String tag,
-                              @RequestParam(name = "id",required = false) Long id,
+                              @RequestParam(name = "id", required = false) Long id,
                               HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("user");
         /*回显*/
@@ -145,6 +156,7 @@ public class PublishController {
     /**
      * 新增酒店记录
      * todo 现在没有实现的时间，可以留着在后面优化添加
+     *
      * @param name        标题
      * @param address     地址
      * @param price       价格
